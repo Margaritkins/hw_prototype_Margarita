@@ -14,24 +14,27 @@ function PrototypesProduct() {
     discount ${this.discount}`;
   };
   this.getDiscountToPrice = function (value) {
-    this[this.discount] = value;
-    return ++this.discount;
+    this.discount = value;
+    return this.price -= this.discount;
   };
   this.byAmountProduct = function (amountValue) {
-    this.rest = amountValue;
-    if (this.rest > this.amount) {
+    
+    if (amountValue > this.amount) {
       return null;
     }
-    return this.rest * (this.price - this.discount);
+    this.amount -= amountValue;
+    return amountValue * this.price;
   };
+  
 }
 
 Product.prototype = new PrototypesProduct();
 
-const milk = new Product("white milk", 10, 50);
+const milk = new Product("white milk", 20, 50);
 
 console.log(milk);
 console.log(milk.showInfo());
-console.log(milk.getDiscountToPrice());
-console.log(milk.byAmountProduct(3));
-console.log(milk.byAmountProduct(150));
+console.log(milk.getDiscountToPrice(10));
+console.log(milk.byAmountProduct(20));
+console.log(milk.byAmountProduct(31));
+// console.log(milk.byAmountProduct(150));
